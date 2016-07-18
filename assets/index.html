@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Flynn Releases</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>
+        Flynn Releases
+
+        <span id="loading" class="pull-right">
+          <i class="fa fa-spinner fa-spin fa-fw"></i>
+        </span>
+      </h1>
+
+      <div class="alert alert-danger alert-dismissible hide" role="alert">
+        <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+
+        <p></p>
+      </div>
+
+      <table id="channels" class="table">
+        <thead>
+          <tr>
+            <th>Channel</th>
+            <th>Current Version</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+
+    <script type="text/template" id="table-row-template">
+      <tr>
+        <td><%= name %></td>
+        <td><strong><%= version %></strong></td>
+      </tr>
+    </script>
+
+    <script type="text/template" id="history-template">
+      <h2><%= name %> history</h2>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Version</th>
+            <th>Changelog</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% _.each(history, function(x) { %>
+            <tr>
+              <td><strong><%= x.version %></strong></td>
+              <td><%= markdown.toHTML(x.changelog) %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown.js/0.5.0/markdown.min.js"></script>
+    <script src="/assets/index.js"></script>
+  </body>
+</html>

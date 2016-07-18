@@ -6,7 +6,7 @@ import (
 	"os"
 	"sort"
 	"strings"
-	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/flynn/flynn/pkg/attempt"
@@ -33,8 +33,8 @@ type History struct {
 }
 
 type Repository struct {
-	client *tuf.Client
-	mtx    sync.RWMutex
+	client   *tuf.Client
+	channels atomic.Value // []*Channel
 }
 
 func NewRepository() (*Repository, error) {
@@ -64,35 +64,54 @@ func NewRepository() (*Repository, error) {
 		return nil, err
 	}
 
-	if _, err := client.Update(); err != nil {
+	r := &Repository{client: client}
+	if err := r.update(); err != nil {
 		return nil, err
 	}
-
-	r := &Repository{client: client}
 	go r.updateLoop()
 	return r, nil
 }
 
+func (r *Repository) Channels() []*Channel {
+	return r.channels.Load().([]*Channel)
+}
+
+var updateAttempts = attempt.Strategy{
+	Total: time.Minute,
+	Delay: 5 * time.Second,
+}
+
+func (r *Repository) updateLoop() {
+	interval := 5 * time.Minute
+
+	for range time.Tick(interval) {
+		if err := updateAttempts.Run(r.update); err != nil {
+			shutdown.Fatal(err)
+		}
+	}
+}
+
 var channelNames = []string{"stable", "nightly"}
 
-func (r *Repository) Channels() ([]*Channel, error) {
+func (r *Repository) update() error {
+	if _, err := r.client.Update(); err != nil && !tuf.IsLatestSnapshot(err) {
+		return err
+	}
 	channels := make([]*Channel, len(channelNames))
 	for i, name := range channelNames {
-		channel, err := r.Channel(name)
+		channel, err := r.getChannel(name)
 		if err != nil {
-			return nil, err
+			return err
 		}
 		channels[i] = channel
 	}
-	return channels, nil
+	r.channels.Store(channels)
+	return nil
 }
 
 var ErrChannelNotFound = errors.New("channel not found")
 
-func (r *Repository) Channel(name string) (*Channel, error) {
-	r.mtx.RLock()
-	defer r.mtx.RUnlock()
-
+func (r *Repository) getChannel(name string) (*Channel, error) {
 	version, err := tufutil.DownloadString(r.client, "/channels/"+name)
 	if err != nil {
 		if _, ok := err.(tuf.ErrUnknownTarget); ok {
@@ -129,31 +148,6 @@ func (r *Repository) Channel(name string) (*Channel, error) {
 	history.Sort()
 
 	return &Channel{Name: name, Version: version, History: history}, nil
-}
-
-var updateAttempts = attempt.Strategy{
-	Total: time.Minute,
-	Delay: 5 * time.Second,
-}
-
-func (r *Repository) updateLoop() {
-	interval := 5 * time.Minute
-
-	for range time.Tick(interval) {
-		if err := updateAttempts.Run(r.update); err != nil {
-			shutdown.Fatal(err)
-		}
-	}
-}
-
-func (r *Repository) update() error {
-	r.mtx.Lock()
-	defer r.mtx.Unlock()
-	_, err := r.client.Update()
-	if tuf.IsLatestSnapshot(err) {
-		err = nil
-	}
-	return err
 }
 
 // sortHistory sorts version history in reverse chronological order

@@ -61,7 +61,8 @@
 		},
 		{
 			"ImportPath": "github.com/jvatic/asset-matrix-go",
-			"Rev": "2cb2227cdc3d81cfae144cfc1c5b50e0e407da8f"
+			"Comment": "v20160316.0-1-gaf57705",
+			"Rev": "af57705bfc48fd06198f5b00ba3bc6daf009e411"
 		},
 		{
 			"ImportPath": "github.com/tent/canonical-json-go",

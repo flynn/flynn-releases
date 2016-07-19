@@ -2,6 +2,9 @@
 	"ImportPath": "github.com/flynn/flynn-releases",
 	"GoVersion": "go1.6",
 	"GodepVersion": "v74",
+	"Packages": [
+		"./..."
+	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/agl/ed25519",
@@ -55,6 +58,10 @@
 			"ImportPath": "github.com/julienschmidt/httprouter",
 			"Comment": "v1.1-31-gfb79d6a",
 			"Rev": "fb79d6a91d3e4a9ecb6d945b218d78fc0d9b1939"
+		},
+		{
+			"ImportPath": "github.com/jvatic/asset-matrix-go",
+			"Rev": "2cb2227cdc3d81cfae144cfc1c5b50e0e407da8f"
 		},
 		{
 			"ImportPath": "github.com/tent/canonical-json-go",

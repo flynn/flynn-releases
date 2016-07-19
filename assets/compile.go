@@ -13,6 +13,12 @@ func main() {
 		Paths: []*matrix.AssetRoot{
 			{Path: "src"},
 			{Path: "vendor"},
+			{
+				GitRepo:   "git://github.com/jvatic/marbles-js.git",
+				GitBranch: "master",
+				GitRef:    "6057b0600550667e37e0e320e8bddc6563292139",
+				Path:      "src",
+			},
 		},
 		OutputDir:      "build",
 		AssetURLPrefix: "/assets/",

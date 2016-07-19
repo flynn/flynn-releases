@@ -12,69 +12,12 @@
   </head>
 
   <body>
-    <div class="container">
-      <h1>
-        Flynn Releases
-
-        <span id="loading" class="pull-right">
-          <i class="fa fa-spinner fa-spin fa-fw"></i>
-        </span>
-      </h1>
-
-      <div class="alert alert-danger alert-dismissible hide" role="alert">
-        <button type="button" class="close" data-dismiss="alert">
-          <span aria-hidden="true">&times;</span>
-          <span class="sr-only">Close</span>
-        </button>
-
-        <p></p>
-      </div>
-
-      <table id="channels" class="table">
-        <thead>
-          <tr>
-            <th>Channel</th>
-            <th>Current Version</th>
-          </tr>
-        </thead>
-
-        <tbody>
-        </tbody>
-      </table>
+    <div class="container" id="app-container">
     </div>
 
-    <script type="text/template" id="table-row-template">
-      <tr>
-        <td><%= name %></td>
-        <td><strong><%= version %></strong></td>
-      </tr>
-    </script>
-
-    <script type="text/template" id="history-template">
-      <h2><%= name %> history</h2>
-
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Version</th>
-            <th>Changelog</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% _.each(history, function(x) { %>
-            <tr>
-              <td><strong><%= x.version %></strong></td>
-              <td><%= markdown.toHTML(x.changelog) %></td>
-            </tr>
-          <% }) %>
-        </tbody>
-      </table>
-    </script>
-
-    <script src="{{assetPath "jquery-3.1.0.min.js"}}">
-    <script src="{{assetPath "bootstrap.min.js"}}"></script>
-    <script src="{{assetPath "underscore-min.js"}}"></script>
-    <script src="{{assetPath "markdown.min.js"}}"></script>
-    <script src="{{assetPath "index.js"}}"></script>
+    <script type="application/javascript" src="{{if .Development}}{{assetPath "react.dev.js"}}{{else}}{{assetPath "react.js"}}{{end}}"></script>
+    <script type="application/javascript" src="{{if .Development}}{{assetPath "react-dom.dev.js"}}{{else}}{{assetPath "react-dom.js"}}{{end}}"></script>
+    <script type="application/javascript" src="{{assetPath "markdown.min.js"}}"></script>
+    <script type="application/javascript" src="{{assetPath "index.js"}}"></script>
   </body>
 </html>

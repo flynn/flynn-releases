@@ -1,29 +1,33 @@
-(function() {
-  "use strict";
+import HTTP from 'marbles/http';
+import JSONMiddleware from 'marbles/http/middleware/serialize_json';
+import MainComponent from 'views/main';
 
-  var loading  = $("#loading")
-  var alertBox = $(".alert")
+var $appContainer = document.getElementById("app-container");
+var render = function (state) {
+	ReactDOM.render(
+		React.createElement(MainComponent, state),
+		$appContainer
+	);
+};
 
-  $(document).ajaxError(function(event, jqxhr, settings, error) {
-    loading.hide()
+render({
+	channels: [],
+	loading: true
+});
 
-    var msg = settings.type + " " + settings.url + " Error!"
-
-    alertBox.removeClass("hide").find("p").text(msg)
-  })
-
-  var channelsTable  = $("#channels tbody")
-  var container      = $(".container")
-  var renderTableRow = _.template($("#table-row-template").html())
-  var renderHistory  = _.template($("#history-template").html())
-
-  $.getJSON("/api/channels", function(channels) {
-    loading.hide()
-
-    $.each(channels, function(_, channel) {
-      channelsTable.append(renderTableRow(channel))
-
-      container.append(renderHistory(channel))
-    })
-  })
-})()
+HTTP({
+	method: 'GET',
+	url: '/api/channels',
+	middleware: [JSONMiddleware]
+}).then(function (args) {
+	render({
+		channels: args[0],
+		loading: false
+	});
+}).catch(function () {
+	render({
+		channels: [],
+		loading: false,
+		error: 'GET /api/channels Error!'
+	});
+});

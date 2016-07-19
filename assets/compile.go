@@ -12,6 +12,7 @@ func main() {
 	m := matrix.New(&matrix.Config{
 		Paths: []*matrix.AssetRoot{
 			{Path: "src"},
+			{Path: "vendor"},
 		},
 		OutputDir:      "build",
 		AssetURLPrefix: "/assets/",
@@ -29,7 +30,7 @@ func compileTemplate(manifest *matrix.Manifest) error {
 	type TemplateData struct {
 		Development bool
 	}
-	tmpl, err := template.New("").Funcs(template.FuncMap{
+	tmpl, err := template.New("index.html.tmpl").Funcs(template.FuncMap{
 		"assetPath": func(p string) string {
 			return "/assets/" + manifest.Assets[p]
 		},

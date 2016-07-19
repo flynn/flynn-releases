@@ -17,7 +17,7 @@ type Server struct {
 func NewServer(repo *Repository) *Server {
 	s := &Server{repo: repo, router: httprouter.New()}
 	s.router.GET("/", s.Index)
-	s.router.ServeFiles("/assets/*filepath", http.Dir("assets"))
+	s.router.ServeFiles("/assets/*filepath", http.Dir("assets/build"))
 	s.router.GET("/api/channels", s.GetChannels)
 	return s
 }
@@ -34,7 +34,7 @@ func (s *Server) ListenAndServe() error {
 
 func (s *Server) Index(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	w.Header().Set("Content-Type", "text/html")
-	http.ServeFile(w, req, "assets/index.html")
+	http.ServeFile(w, req, "assets/build/index.html")
 }
 
 func (s *Server) GetChannels(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {

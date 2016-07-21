@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/flynn/flynn/pkg/attempt"
-	"github.com/flynn/flynn/pkg/shutdown"
 	"github.com/flynn/flynn/pkg/tufutil"
 	tuf "github.com/flynn/go-tuf/client"
 	tufdata "github.com/flynn/go-tuf/data"
@@ -86,7 +85,7 @@ func (r *Repository) updateLoop() {
 
 	for range time.Tick(interval) {
 		if err := updateAttempts.Run(r.update); err != nil {
-			shutdown.Fatal(err)
+			log.Error("error running update", "err", err)
 		}
 	}
 }

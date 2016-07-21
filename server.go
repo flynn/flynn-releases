@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"os"
 
@@ -28,7 +27,7 @@ func (s *Server) ListenAndServe() error {
 		port = "3000"
 	}
 	addr := ":" + port
-	log.Println("Listening on", addr)
+	log.Info("listening for HTTP requests", "addr", addr)
 	return http.ListenAndServe(addr, s.router)
 }
 

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Flynn Releases</title>
+
+    <link href="{{assetPath "bootstrap.min.css"}}" rel="stylesheet">
+    <link href="{{assetPath "font-awesome.css"}}" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="container" id="app-container">
+    </div>
+
+    <script type="application/javascript" src="{{if .Development}}{{assetPath "react.dev.js"}}{{else}}{{assetPath "react.js"}}{{end}}"></script>
+    <script type="application/javascript" src="{{if .Development}}{{assetPath "react-dom.dev.js"}}{{else}}{{assetPath "react-dom.js"}}{{end}}"></script>
+    <script type="application/javascript" src="{{assetPath "markdown.min.js"}}"></script>
+    <script type="application/javascript" src="{{assetPath "index.js"}}"></script>
+  </body>
+</html>

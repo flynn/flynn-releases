@@ -1,0 +1,100 @@
+{
+	"ImportPath": "github.com/flynn/flynn-releases",
+	"GoVersion": "go1.6",
+	"GodepVersion": "v74",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/agl/ed25519",
+			"Rev": "278e1ec8e8a6e017cd07577924d6766039146ced"
+		},
+		{
+			"ImportPath": "github.com/agl/ed25519/edwards25519",
+			"Rev": "278e1ec8e8a6e017cd07577924d6766039146ced"
+		},
+		{
+			"ImportPath": "github.com/boltdb/bolt",
+			"Comment": "v1.2.1-11-gacc803f",
+			"Rev": "acc803f0ced151102ed51bf824f8709ebd6602bc"
+		},
+		{
+			"ImportPath": "github.com/flynn/flynn/pkg/attempt",
+			"Comment": "v20160718.0-2-g388a5e5",
+			"Rev": "388a5e5f1c2fbb800324f8144a80c1c1a438d91f"
+		},
+		{
+			"ImportPath": "github.com/flynn/flynn/pkg/shutdown",
+			"Comment": "v20160718.0-2-g388a5e5",
+			"Rev": "388a5e5f1c2fbb800324f8144a80c1c1a438d91f"
+		},
+		{
+			"ImportPath": "github.com/flynn/flynn/pkg/tufutil",
+			"Comment": "v20160718.0-2-g388a5e5",
+			"Rev": "388a5e5f1c2fbb800324f8144a80c1c1a438d91f"
+		},
+		{
+			"ImportPath": "github.com/flynn/go-tuf/client",
+			"Rev": "82ed8591c2f9fa5170479d252ac4d81be49c6496"
+		},
+		{
+			"ImportPath": "github.com/flynn/go-tuf/data",
+			"Rev": "82ed8591c2f9fa5170479d252ac4d81be49c6496"
+		},
+		{
+			"ImportPath": "github.com/flynn/go-tuf/keys",
+			"Rev": "82ed8591c2f9fa5170479d252ac4d81be49c6496"
+		},
+		{
+			"ImportPath": "github.com/flynn/go-tuf/signed",
+			"Rev": "82ed8591c2f9fa5170479d252ac4d81be49c6496"
+		},
+		{
+			"ImportPath": "github.com/flynn/go-tuf/util",
+			"Rev": "82ed8591c2f9fa5170479d252ac4d81be49c6496"
+		},
+		{
+			"ImportPath": "github.com/go-stack/stack",
+			"Comment": "v1.5.2",
+			"Rev": "100eb0c0a9c5b306ca2fb4f165df21d80ada4b82"
+		},
+		{
+			"ImportPath": "github.com/inconshreveable/log15",
+			"Comment": "v2.3-79-g0b45fb2",
+			"Rev": "0b45fb2e7866a5e51227a4de1fce4933b154ec36"
+		},
+		{
+			"ImportPath": "github.com/inconshreveable/log15/term",
+			"Comment": "v2.3-79-g0b45fb2",
+			"Rev": "0b45fb2e7866a5e51227a4de1fce4933b154ec36"
+		},
+		{
+			"ImportPath": "github.com/julienschmidt/httprouter",
+			"Comment": "v1.1-31-gfb79d6a",
+			"Rev": "fb79d6a91d3e4a9ecb6d945b218d78fc0d9b1939"
+		},
+		{
+			"ImportPath": "github.com/jvatic/asset-matrix-go",
+			"Comment": "v20160316.0-1-gaf57705",
+			"Rev": "af57705bfc48fd06198f5b00ba3bc6daf009e411"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-colorable",
+			"Comment": "v0.0.5",
+			"Rev": "9056b7a9f2d1f2d96498d6d146acd1f9d5ed3d59"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-isatty",
+			"Rev": "56b76bdf51f7708750eac80fa38b952bb9f32639"
+		},
+		{
+			"ImportPath": "github.com/tent/canonical-json-go",
+			"Rev": "96e4ba3a7613a1216cbd1badca4efe382adea337"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "a646d33e2ee3172a661fc09bca23bb4889a41bc8"
+		}
+	]
+}

@@ -37,6 +37,8 @@ func (s *Server) Index(w http.ResponseWriter, req *http.Request, _ httprouter.Pa
 }
 
 func (s *Server) GetChannels(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {
+	c := s.repo.Channels()
+	w.Header().Set("Last-Modified", c.UpdatedAt.UTC().Format(http.TimeFormat))
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(s.repo.Channels())
+	json.NewEncoder(w).Encode(c.Channels)
 }

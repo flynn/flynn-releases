@@ -20,6 +20,11 @@ const (
 	defaultTufRepository = "https://dl.flynn.io/tuf"
 )
 
+type Channels struct {
+	Channels  []*Channel
+	UpdatedAt time.Time
+}
+
 type Channel struct {
 	Name    string     `json:"name"`
 	Version string     `json:"version"`
@@ -33,7 +38,7 @@ type History struct {
 
 type Repository struct {
 	client   *tuf.Client
-	channels atomic.Value // []*Channel
+	channels atomic.Value // *Channels
 }
 
 func NewRepository() (*Repository, error) {
@@ -71,8 +76,8 @@ func NewRepository() (*Repository, error) {
 	return r, nil
 }
 
-func (r *Repository) Channels() []*Channel {
-	return r.channels.Load().([]*Channel)
+func (r *Repository) Channels() *Channels {
+	return r.channels.Load().(*Channels)
 }
 
 var updateAttempts = attempt.Strategy{
@@ -93,7 +98,10 @@ func (r *Repository) updateLoop() {
 var channelNames = []string{"stable", "nightly"}
 
 func (r *Repository) update() error {
-	if _, err := r.client.Update(); err != nil && !tuf.IsLatestSnapshot(err) {
+	_, err := r.client.Update()
+	if tuf.IsLatestSnapshot(err) {
+		return nil
+	} else if err != nil {
 		return err
 	}
 	channels := make([]*Channel, len(channelNames))
@@ -104,7 +112,10 @@ func (r *Repository) update() error {
 		}
 		channels[i] = channel
 	}
-	r.channels.Store(channels)
+	r.channels.Store(&Channels{
+		Channels:  channels,
+		UpdatedAt: time.Now(),
+	})
 	return nil
 }
 

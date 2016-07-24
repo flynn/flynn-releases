@@ -1,29 +1,13 @@
+import RouteLink from './route-link';
+
 var MainComponent = React.createClass({
 	render: function () {
 		var props = this.props;
-		var state = this.state;
 		return (
 			<section>
 				<h1>
 					Flynn Releases
-
-					{props.loading ? (
-						<span id="loading" className="pull-right">
-							<i className="fa fa-spinner fa-spin fa-fw"></i>
-						</span>
-					) : null}
 				</h1>
-
-				{props.error && !state.alertDismissed ? (
-					<div className="alert alert-danger alert-dismissible" role="alert">
-						<button type="button" className="close" data-dismiss="alert" onClick={this.__dismissAlert}>
-							<span aria-hidden="true">&times;</span>
-							<span className="sr-only">Close</span>
-						</button>
-
-						<p>{props.error}</p>
-					</div>
-				) : null}
 
 				<table id="channels" className="table">
 					<thead>
@@ -61,7 +45,7 @@ var MainComponent = React.createClass({
 									{channel.history.map(function (x) {
 										return (
 											<tr>
-												<td><strong>{x.version}</strong></td>
+												<td><strong><RouteLink path={'/'+ channel.name +'/'+ x.version}>{x.version}</RouteLink></strong></td>
 												<td dangerouslySetInnerHTML={{__html: markdown.toHTML(x.changelog)}}/>
 											</tr>
 										);
@@ -73,19 +57,6 @@ var MainComponent = React.createClass({
 				})}
 			</section>
 		);
-	},
-
-	getInitialState: function () {
-		return {
-			alertDismissed: false
-		};
-	},
-
-	__dismissAlert: function (e) {
-		e.preventDefault();
-		this.setState({
-			alertDismissed: true
-		});
 	}
 });
 

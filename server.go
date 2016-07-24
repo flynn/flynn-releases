@@ -16,6 +16,9 @@ type Server struct {
 func NewServer(repo *Repository) *Server {
 	s := &Server{repo: repo, router: httprouter.New()}
 	s.router.GET("/", s.Index)
+	r2 := httprouter.New()
+	r2.GET("/:channel/:version", s.Index)
+	s.router.NotFound = r2
 	s.router.ServeFiles("/assets/*filepath", http.Dir("assets/build"))
 	s.router.GET("/api/channels", s.GetChannels)
 	return s

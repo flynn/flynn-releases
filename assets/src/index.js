@@ -1,31 +1,48 @@
 import HTTP from 'marbles/http';
+import Config from './config';
+import MainRouter from './router';
 import JSONMiddleware from 'marbles/http/middleware/serialize_json';
-import MainComponent from 'views/main';
 
 var $appContainer = document.getElementById("app-container");
-var render = function (state) {
-	ReactDOM.render(
-		React.createElement(MainComponent, state),
-		$appContainer
-	);
+var listeners = [];
+var appContext = {
+	data: {
+		channels: [],
+		loading: true
+	},
+	render: function (component, props) {
+		props = props || {};
+		ReactDOM.render(
+			React.createElement(component, props),
+			$appContainer
+		);
+	},
+	listen: function (fn) {
+		listeners.push(fn);
+	}
 };
 
-render({
-	channels: [],
-	loading: true
-});
+var updateData = function (newData) {
+	appContext.data = newData;
+	listeners.forEach(function (fn) {
+		fn();
+	});
+};
+
+Config.history.register(new MainRouter({ context: appContext }));
+Config.history.start();
 
 HTTP({
 	method: 'GET',
 	url: '/api/channels',
 	middleware: [JSONMiddleware]
 }).then(function (args) {
-	render({
+	updateData({
 		channels: args[0],
 		loading: false
 	});
 }).catch(function () {
-	render({
+	updateData({
 		channels: [],
 		loading: false,
 		error: 'GET /api/channels Error!'

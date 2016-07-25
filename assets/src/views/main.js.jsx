@@ -5,36 +5,42 @@ var MainComponent = React.createClass({
 		var props = this.props;
 		return (
 			<section>
-				<h1>
-					Flynn Releases
-				</h1>
+				<header>
+					<h1>
+						Releases
+					</h1>
+				</header>
 
-				<table id="channels" className="table">
-					<thead>
-						<tr>
-							<th>Channel</th>
-							<th>Current Version</th>
-						</tr>
-					</thead>
+				<section>
+					<table>
+						<thead>
+							<tr>
+								<th>Channel</th>
+								<th>Current Version</th>
+							</tr>
+						</thead>
 
-					<tbody>
-						{props.channels.map(function (channel) {
-							return (
-								<tr>
-									<td>{channel.name}</td>
-									<td><strong>{channel.version}</strong></td>
-								</tr>
-							);
-						})}
-					</tbody>
-				</table>
+						<tbody>
+							{props.channels.map(function (channel) {
+								return (
+									<tr key={channel.name}>
+										<td><a href={'#ch-'+channel.name}>{channel.name}</a></td>
+										<td><strong><RouteLink path={'/'+ channel.name +'/'+ channel.version}>{channel.version}</RouteLink></strong></td>
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
+				</section>
 
 				{props.channels.map(function (channel) {
 					return (
-						<div>
-							<h2>{channel.name} history</h2>
+						<section key={channel.name} id={"ch-"+ channel.name}>
+							<header>
+								<h2>{channel.name} history</h2>
+							</header>
 
-							<table className="table">
+							<table>
 								<thead>
 									<tr>
 										<th>Version</th>
@@ -44,7 +50,7 @@ var MainComponent = React.createClass({
 								<tbody>
 									{channel.history.map(function (x) {
 										return (
-											<tr>
+											<tr key={x.version}>
 												<td><strong><RouteLink path={'/'+ channel.name +'/'+ x.version}>{x.version}</RouteLink></strong></td>
 												<td dangerouslySetInnerHTML={{__html: markdown.toHTML(x.changelog)}}/>
 											</tr>
@@ -52,7 +58,7 @@ var MainComponent = React.createClass({
 									})}
 								</tbody>
 							</table>
-						</div>
+						</section>
 					);
 				})}
 			</section>

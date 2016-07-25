@@ -1,0 +1,37 @@
+@media all and (max-width: 750px) {
+  .content-container {
+    width: 320px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .mnav > ul {
+    width: 320px;
+  }
+
+  .mnav {
+    height: 51px;
+    line-height: 51px;
+    font-size: 0.56rem;
+    margin: 0 1rem;
+    > ul > li + li {
+      margin-left: 1em;
+    }
+  }
+
+  h1 {
+    font-size: 2.0625rem;
+  }
+
+  h2 {
+    font-size: 2.2rem;
+  }
+
+  h3 {
+    font-size: 1.48rem;
+  }
+
+  p, h4 {
+    font-size: 1rem;
+  }
+}

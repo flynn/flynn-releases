@@ -2,6 +2,7 @@ import HTTP from 'marbles/http';
 import Config from './config';
 import MainRouter from './router';
 import JSONMiddleware from 'marbles/http/middleware/serialize_json';
+import LayoutComponent from './views/layout';
 
 var $appContainer = document.getElementById("app-container");
 var listeners = [];
@@ -12,10 +13,8 @@ var appContext = {
 	},
 	render: function (component, props) {
 		props = props || {};
-		ReactDOM.render(
-			React.createElement(component, props),
-			$appContainer
-		);
+		var wrapped = React.createElement(LayoutComponent, {}, React.createElement(component, props));
+		ReactDOM.render(wrapped, $appContainer);
 	},
 	listen: function (fn) {
 		listeners.push(fn);

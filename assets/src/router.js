@@ -18,6 +18,7 @@ var MainRouter = Router.createClass({
 	},
 
 	beforeHandler: function (event) {
+		window.scrollTo(0, 0);
 		this.context.render(LoadingComponent, {});
 		if (this.context.data.loading) {
 			event.abort();

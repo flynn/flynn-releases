@@ -4,6 +4,6 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/flynn-releases']
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['beta', 'run', 'deploy', 'flynn-releases', '--image', 'gcr.io/$PROJECT_ID/flynn-releases', '--region', 'us-central1']
+  args: ['beta', 'run', 'deploy', 'flynn-releases', '--image', 'gcr.io/$PROJECT_ID/flynn-releases', '--region', 'us-central1', '--platform', 'managed']
 images:
 - gcr.io/$PROJECT_ID/flynn-releases

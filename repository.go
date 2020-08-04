@@ -147,7 +147,7 @@ func (r *Repository) getChannel(name string) (*Channel, error) {
 			continue
 		}
 		changelog, err := tufutil.DownloadString(r.client, target)
-		if err != nil {
+		if _, ok := err.(tuf.ErrNotFound); !ok && err != nil {
 			return nil, err
 		}
 		history = append(history, &History{
